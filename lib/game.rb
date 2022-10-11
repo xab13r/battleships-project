@@ -40,45 +40,45 @@ class Game
     when :vertical
       # Check ship can vertically fit on the board
       fail "Coordinates are invalid" unless length <= (y..@rows).size
+
       # Generate coordinates for the ship
       length.times do
         ship_coordinates.push([x, y])
         y += 1
       end
       # Check overlapping
-      overlapping = ship_coordinates.any? {|xy| @board.include?(xy)}
+      overlapping = ship_coordinates.any? { |xy| @board.include?(xy) }
       if overlapping
         fail "Ship cannot overlap"
       else
-        ship_coordinates.each {|xy| @board.push(xy)}
+        ship_coordinates.each { |xy| @board.push(xy) }
       end
 
     when :horizontal
       # Check if ship can horizontally fit on the board
       fail "Coordinates are invalid" unless length <= (x..@cols).size
+
       # Generate coordinates for the ship
       length.times do
         ship_coordinates.push([x, y])
         x += 1
       end
       # Check overlapping
-      overlapping = ship_coordinates.any? {|xy| @board.include?(xy)}
+      overlapping = ship_coordinates.any? { |xy| @board.include?(xy) }
       if overlapping
         fail "Ship cannot overlap"
       else
-        ship_coordinates.each {|xy| @board.push(xy)}
+        ship_coordinates.each { |xy| @board.push(xy) }
       end
     end
 
     # Remove ship from unplaced_ships
     @unplaced_ships.delete_at(@unplaced_ships.index(ship_to_be_placed))
-
   end
 
   def ship_at?(x, y)
     return @board.any? do |xy| xy == [x, y] end
   end
-
 end
 
 class Ship

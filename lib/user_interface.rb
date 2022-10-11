@@ -3,8 +3,8 @@ class UserInterface
     @io = io
     @player_1 = player_1
     @player_2 = player_2
-    @coordinates = {"A": 1, "B": 2,"C": 3,"D": 4,"E": 5,"F": 6,"G": 7,"H": 8,"I": 9,"J": 10,"K": 11,"L": 12,"M": 13,"N": 14,"O": 15,"P": 16,"Q": 17,"R": 18,"S": 19,"T": 20,"U": 21,"V": 22,"W": 23,"X": 24,"Y": 25,"Z": 26,
-    }
+    @coordinates = { "A": 1, "B": 2, "C": 3, "D": 4, "E": 5, "F": 6, "G": 7, "H": 8, "I": 9, "J": 10, "K": 11, "L": 12,
+                     "M": 13, "N": 14, "O": 15, "P": 16, "Q": 17, "R": 18, "S": 19, "T": 20, "U": 21, "V": 22, "W": 23, "X": 24, "Y": 25, "Z": 26, }
 
     # Check that board dimensions are the same for both players
     if @player_1.cols != @player_2.cols || @player_1.rows != @player_2.rows
@@ -19,21 +19,21 @@ class UserInterface
 
   def run
     start_the_game
-      while !@player_1.unplaced_ships.empty? do
-        begin
-          allow_ships_placement(@player_1)
-        rescue
-          show "[!] Some inputs were not correct - Try again."
-        end
+    while !@player_1.unplaced_ships.empty? do
+      begin
+        allow_ships_placement(@player_1)
+      rescue
+        show "[!] Some inputs were not correct - Try again."
       end
+    end
 
-      while !@player_2.unplaced_ships.empty? do
-        begin
-          allow_ships_placement(@player_2)
-        rescue
-          show "[!] Some inputs were not correct - Try again."
-        end
+    while !@player_2.unplaced_ships.empty? do
+      begin
+        allow_ships_placement(@player_2)
+      rescue
+        show "[!] Some inputs were not correct - Try again."
       end
+    end
     # p "[*] PLAYER TWO SETUP"
     show "[*] Let's start the game!"
 
@@ -143,19 +143,21 @@ class UserInterface
     result = (1..player.rows).map do |y|
       (1..player.cols).map do |x|
         next "S" if player.ship_at?(x, y)
+
         next "."
       end
     end
 
     (player.rows).times do |i|
-      result[i].insert(0, @coordinates.key(i+1).to_s)
+      result[i].insert(0, @coordinates.key(i + 1).to_s)
     end
     result.insert(0, first_row)
     result[0].insert(0, " ")
     return result.map do |y|
-      y.map do |x|
-        x end.join(" ")
-      end.join("\n")
+             y.map do |x|
+               x
+             end.join(" ")
+           end.join("\n")
   end
 
   def format_attack_board(player)
@@ -166,19 +168,20 @@ class UserInterface
       (1..player.cols).map do |x|
         next "X" if player.hits.include?([x, y])
         next "O" if player.miss.include?([x, y])
+
         next "."
       end
     end
 
     (player.rows).times do |i|
-      result[i].insert(0, @coordinates.key(i+1).to_s)
+      result[i].insert(0, @coordinates.key(i + 1).to_s)
     end
     result.insert(0, first_row)
     result[0].insert(0, " ")
     return result.map do |y|
-      y.map do |x|
-        x end.join(" ")
-      end.join("\n")
-
+             y.map do |x|
+               x
+             end.join(" ")
+           end.join("\n")
   end
 end
